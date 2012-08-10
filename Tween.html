@@ -1,0 +1,128 @@
+<html>
+	<head>
+		<style type="text/css">
+			body {
+				margin: 0;
+				padding:0; 
+				width:100%;
+				background-color:#e9e9e9;
+				}
+			
+			.button {
+				margin: 20px auto;
+				width: 200px;
+				height: 20px;
+				color:#fff;
+				background-color:#64C039;
+				border-radius: 5px;
+				text-align:center;
+				cursor: pointer;
+			}
+			
+			.panel {
+				position: relative;
+				width: 80%;
+				height: 300px;
+				margin: 5px auto;
+				padding: 1%;
+				background-color:#e0e0e0;
+				border: thin dotted #000000;
+				
+			}
+			
+		</style>
+		<script type="text/javascript" src='simpletween-min.js'></script>
+		<script type="text/javascript">
+
+
+			function start1() {
+				Tween.to(
+					'div1', 
+					{width:60, height: 60, x:Math.random()*400, y: Math.random()*200}, 
+					{delayBefore:0, delayAfter:0, duration: 1, easing: 'inout'}, 
+					{onStep: function() {}, onComplete: function() {}}
+				);
+			}
+			
+			function start2() {
+				Tween.to(
+					'div1', 
+					{alpha:Math.random()}, 
+					{delayBefore:0, delayAfter:0, duration: 1, easing: 'inout'}, 
+					{onStep: function() {}, onComplete: function() {}}
+				);
+			}
+			
+			function start3() {
+				var rgb = []; 
+				for (var i=0; i<3; i++) rgb.push(Math.round(Math.random()*255));
+				Tween.to(
+					'div2', 
+					{width:50, height: 50, backgroundColor: 'rgb('+rgb.join(',')+')', borderRadius: Math.random()*10}, 
+					{delayBefore:0, delayAfter:0, duration: 1, easing: 'inout'}, 
+					{onStep: function() {}, onComplete: function() {}}
+				);
+			}
+			
+			function start4() {
+				
+				Tween.to('div3', {x:500}, {duration: 3, easing: 'in'});
+				Tween.to('div4', {x:500}, {duration: 3, easing: 'out'});
+				Tween.to('div5', {x:500}, {duration: 3, easing: 'inout'});
+				Tween.to('div6', {x:500}, {duration: 3, easing: 'outin'});
+				Tween.to('div7', {x:500}, {duration: 3, easing: 'linear'});
+				Tween.to('div8', {x:500}, {duration: 3, easing: 'elastic'});
+				
+				setTimeout(
+					function()
+					{
+						Tween.to('div3', {x:0}, {duration: 3, easing: 'in'});
+						Tween.to('div4', {x:0}, {duration: 3, easing: 'out'});
+						Tween.to('div5', {x:0}, {duration: 3, easing: 'inout'});
+						Tween.to('div6', {x:0}, {duration: 3, easing: 'outin'});
+						Tween.to('div7', {x:0}, {duration: 3, easing: 'linear'});
+						Tween.to('div8', {x:0}, {duration: 3, easing: 'elastic'});
+					}, 5000);
+			}
+
+
+			function start5() {
+			
+				var test = { a: 0, b:100};
+				var div9 = document.getElementById('div9');
+				Tween.to(
+					test, 
+					{a:100, b:0}, 
+					{duration: 5, easing: 'inout'}, 
+					{onStep: function(params, values) 
+						{
+							div9.innerHTML+='a='+values.a+'; b='+values.b+'<br>';
+						}, 
+					onComplete: function(params) {
+						div9.innerHTML+='done!<br>';
+					}}
+				);
+			}			
+		</script>
+	</head>
+	
+	<body>
+		<div class="panel" id="panel">
+			<div id="div1" style="position:absolute; top:40px; left: 300px; width:20px; height:20px; background-color:#0c0; opacity:1"></div>
+			<div id="div2" style="position:absolute; top:50px; right: 50px; width:20px; height:20px; background-color:#0c0; opacity:1"></div>
+			<div id="div3" style="position:absolute; top:10px;  left: 0px; width:100px; height:20px; color: #eee; background-color:#58b5e4; text-align:center;">in</div>
+			<div id="div4" style="position:absolute; top:40px;  left: 0px; width:100px; height:20px; color: #eee; background-color:#58b5e4; text-align:center;">out</div>
+			<div id="div5" style="position:absolute; top:70px;  left: 0px; width:100px; height:20px; color: #eee; background-color:#58b5e4; text-align:center;">inout</div>
+			<div id="div6" style="position:absolute; top:100px; left: 0px; width:100px; height:20px; color: #eee; background-color:#58b5e4; text-align:center;">outin</div>
+			<div id="div7" style="position:absolute; top:130px; left: 0px; width:100px; height:20px; color: #eee; background-color:#58b5e4; text-align:center;">linear</div>
+			<div id="div8" style="position:absolute; top:160px; left: 0px; width:100px; height:20px; color: #eee; background-color:#58b5e4; text-align:center;">elastic</div>
+			
+		</div>
+		<div class="button" onclick="start1()">Position</div>
+		<div class="button" onclick="start2()">Opacity</div>
+		<div class="button" onclick="start3()">Color</div>
+		<div class="button" onclick="start4()">Easing functions</div>
+		<div class="button" onclick="start5()">Callback</div>
+		<div id="div9" class="panel" style="height:100px; overflow:scroll"></div>
+	</body>
+</html>
