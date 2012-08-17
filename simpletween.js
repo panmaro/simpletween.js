@@ -46,7 +46,7 @@
 			ease_in: function (t,b,c,d) { return c*(t/=d)*t*t*t + b;},
 			ease_out: function (t,b,c,d) { return -c * ((t=t/d-1)*t*t*t - 1) + b;},
 			ease_inout: function (t,b,c,d) { if ((t/=d/2) < 1) return c/2*t*t*t*t + b; return -c/2 * ((t-=2)*t*t*t - 2) + b; },
-			ease_outin: function (t,b,c,d) { var ts=(t/=d)*t, tc=ts*t; return b+c*(-0.002546148949710947*tc*ts + 0.006365372374279588*ts*ts + 5.996180776575432*tc + -9.00063653723743*ts + 4.000636537237429*t) } ,
+			ease_outin: function (t,b,c,d) { var ts=(t/=d)*t, tc=ts*t; return b+c*(-0.002546148949710947*tc*ts + 0.006365372374279588*ts*ts + 5.996180776575432*tc + -9.00063653723743*ts + 4.000636537237429*t) } ,
 			ease_linear: function (t,b,c,d) { return c*t/d + b; },
 			ease_elastic: function (t,b,c,d) { var ts=(t/=d)*t, tc=ts*t; return b+c*(1.5109254498714684*tc*ts + -11.272493573264782*ts*ts + 18.149100257069406*tc + -10.205655526992288*ts + 2.8181233933161955*t); }
 		}
@@ -183,7 +183,7 @@
 						return;
 					} else {
 						that.state = 2;
-						if (this.onStart) this.onStart.call(this, this.callbackParams);
+						if (that.onStart) that.onStart.call(that, that.callbackParams);
 						break;
 					}
 					
@@ -194,6 +194,7 @@
 					} else that.state = 4;
 					
 				case 4:
+					if (that.onComplete) that.onComplete.call(that, that.callbackParams);
 					that.stop.call(that, -1);
 					return;
 			}
@@ -233,8 +234,7 @@
 			
 			if (!index) index = tweenIndex(this.target);
 			clearInterval(this.interval);
-			delete tweens[index];
-			if (this.onComplete) this.onComplete.call(this, this.callbackParams);
+			delete tweens[index];			
 		}
 		
 		CTween.prototype.defaultTarget = function(name) {
